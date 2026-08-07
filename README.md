@@ -1,4 +1,4 @@
-# 🎈 Blank app template
+# 🎈 My First ChatBot
 
 A simple Streamlit app template for you to modify!
 
