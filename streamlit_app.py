@@ -34,12 +34,16 @@ if "selected_model" not in st.session_state:
 
 # Define model details
 models = {
-    "gemma2-9b-it": {"name": "Gemma2-9b-it", "tokens": 8192, "developer": "Google"},
-    "llama-3.3-70b-versatile": {"name": "LLaMA3.3-70b-versatile", "tokens": 128000, "developer": "Meta"},
-    "llama-3.1-8b-instant" : {"name": "LLaMA3.1-8b-instant", "tokens": 128000, "developer": "Meta"},
-    "llama3-70b-8192": {"name": "LLaMA3-70b-8192", "tokens": 8192, "developer": "Meta"},
-    "llama3-8b-8192": {"name": "LLaMA3-8b-8192", "tokens": 8192, "developer": "Meta"},
-    "mixtral-8x7b-32768": {"name": "Mixtral-8x7b-Instruct-v0.1", "tokens": 32768, "developer": "Mistral"},
+    "llama-3.3-70b-versatile": {
+        "name": "Llama 3.3 70B",
+        "tokens": 32768,
+        "developer": "Meta",
+    },
+    "llama-3.1-8b-instant": {
+        "name": "Llama 3.1 8B Instant",
+        "tokens": 32768,
+        "developer": "Meta",
+    },
 }
 
 # Layout for model selection and max_tokens slider
@@ -50,7 +54,7 @@ with col1:
         "Choose a model:",
         options=list(models.keys()),
         format_func=lambda x: models[x]["name"],
-        index=4  # Default to mixtral
+        index=0
     )
 
 # Detect model change and clear chat history if model has changed
@@ -106,6 +110,17 @@ if prompt := st.chat_input("Enter your prompt here..."):
             max_tokens=max_tokens,
             stream=True
         )
+    
+        with st.chat_message("assistant", avatar="🤖"):
+            chat_responses_generator = generate_chat_responses(chat_completion)
+            full_response = st.write_stream(chat_responses_generator)
+    
+        st.session_state.messages.append(
+            {"role": "assistant", "content": full_response}
+        )
+    
+    except Exception as e:
+        st.error(f"Groq API error: {e}", icon="🚨")
 
         # Use the generator function with st.write_stream
         with st.chat_message("assistant", avatar="🤖"):
