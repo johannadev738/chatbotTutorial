@@ -67,16 +67,15 @@ if "selected_model" not in st.session_state:
 # --------------------------------------------------
 
 models = {
-    "llama-3.3-70b-versatile": {
-        "name": "Llama 3.3 70B",
-        "tokens": 32768,
-        "developer": "Meta",
+    "openai/gpt-oss-20b": {
+        "name": "GPT-OSS 20B",
+        "tokens": 8192,
+        "developer": "OpenAI",
     },
-
-    "llama-3.1-8b-instant": {
-        "name": "Llama 3.1 8B Instant",
-        "tokens": 32768,
-        "developer": "Meta",
+    "openai/gpt-oss-120b": {
+        "name": "GPT-OSS 120B",
+        "tokens": 8192,
+        "developer": "OpenAI",
     },
 }
 
